@@ -1,9 +1,8 @@
-import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
 import { defineConfig } from "vite";
-const plugins = [react(), tailwindcss(), jsxLocPlugin()];
+const plugins = [react(), tailwindcss()];
 export default defineConfig({
     plugins,
     resolve: {
@@ -23,6 +22,18 @@ export default defineConfig({
         port: 3000,
         strictPort: false, // Will find next available port if 3000 is busy
         host: true,
+        proxy: {
+            "/api": {
+                target: process.env.VITE_DEV_API_PROXY_TARGET || "http://localhost:4000",
+                changeOrigin: true,
+                secure: false,
+            },
+            "/sanctum": {
+                target: process.env.VITE_DEV_API_PROXY_TARGET || "http://localhost:4000",
+                changeOrigin: true,
+                secure: false,
+            },
+        },
         allowedHosts: [
             "localhost",
             "127.0.0.1",
