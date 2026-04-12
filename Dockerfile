@@ -2,6 +2,8 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+RUN echo "BUILD_MARKER_2026_04_13"
+
 # Use the repo's package manager version via Corepack.
 RUN corepack enable
 
