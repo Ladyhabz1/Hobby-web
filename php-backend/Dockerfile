@@ -9,13 +9,20 @@ RUN apk add --no-cache \
     composer \
     sqlite
 
+# Build dependencies required for compiling bundled PHP extensions
+RUN apk add --no-cache --virtual .build-deps \
+    $PHPIZE_DEPS \
+    libxml2-dev
+
 # Install PHP extensions
 RUN docker-php-ext-install \
     pdo \
     pdo_mysql \
-    json \
     xml \
     bcmath
+
+# Remove build dependencies to keep image size smaller
+RUN apk del .build-deps
 
 # Set working directory
 WORKDIR /app
@@ -40,4 +47,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/api/health || exit 1
 
 # Start Laravel development server
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT:-8000}"]
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"]
