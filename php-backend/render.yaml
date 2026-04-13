@@ -22,66 +22,10 @@ services:
           name: swimming-hobby-api
           property: url
       
-      - key: APP_KEY
-        sync: false
-      
-      - key: DB_CONNECTION
-        value: mysql
-      
-      - key: DB_HOST
-        fromDatabase:
-          name: swimming-hobby-db
-          property: host
-      
-      - key: DB_PORT
-        value: "3306"
-      
-      - key: DB_DATABASE
-        value: swimming_hobby
-      
-      - key: DB_USERNAME
-        fromDatabase:
-          name: swimming-hobby-db
-          property: username
-      
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: swimming-hobby-db
-          property: password
-      
-      - key: CACHE_STORE
-        value: array
-      
-      - key: QUEUE_CONNECTION
-        value: sync
-      
-      - key: SESSION_DRIVER
-        value: file
-      
-      - key: SANCTUM_STATEFUL_DOMAINS
-        value: swimming-hobby-api.onrender.com
-      
-      - key: SESSION_DOMAIN
-        value: .onrender.com
-      
       - key: FRONTEND_URL
         value: https://swimming-hobby-site.onrender.com
       
       - key: ALLOWED_ORIGINS
         value: https://swimming-hobby-site.onrender.com
-    
-    # Build command
-    buildCommand: composer install && php artisan migrate --force
-    
-    # Start command
-    startCommand: php artisan serve --host=0.0.0.0
 
-databases:
-  - name: swimming-hobby-db
-    version: "8"
-    plan: starter
-
-# Note: Update the following URLs in the database section after your services are deployed:
-# - FRONTEND_URL: Replace with your actual frontend service URL
-# - ALLOWED_ORIGINS: Replace with your actual frontend service URL
-# - SANCTUM_STATEFUL_DOMAINS: Replace with your actual API service domain
+# Note: Update FRONTEND_URL and ALLOWED_ORIGINS after frontend deployment.
